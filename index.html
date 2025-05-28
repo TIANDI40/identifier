@@ -1,0 +1,23 @@
+# Utilisation d'une police compatible avec les caractères chinois (idéogrammes)
+# NotoSansCJK is a good font family for CJK characters, but might not be installed by default.
+# Instead, we use a commonly available fallback like DejaVuSans
+
+try:
+    font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 36)
+except IOError:
+    font = ImageFont.load_default()
+
+# Recréation de l'image avec la nouvelle police
+image = Image.new("RGB", (img_size, img_size), "white")
+draw = ImageDraw.Draw(image)
+
+for y in range(grid_size):
+    for x in range(grid_size):
+        char = grid[y][x]
+        pos = (x * cell_size + 15, y * cell_size + 10)
+        draw.text(pos, char, fill="black", font=font)
+
+# Sauvegarde de l'image finale
+image_path = "/mnt/data/grille_ideogrammes_tao.png"
+image.save(image_path)
+image_path
